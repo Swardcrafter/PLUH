@@ -1,17 +1,21 @@
 class Error {
-	constructor(error_name, details) {
+	constructor(pos_start, pos_end, error_name, details) {
+		this.pos_start = pos_start;
+		this.pos_end = pos_end;
 		this.error_name = error_name;
 		this.details = details;
 	}
 
 	As_String() {
-		return `${this.error_name}: ${this.details}`;
+		let result = `${this.error_name}: ${this.details}\n`;
+		result += `File ${this.pos_start.fn}, line ${this.pos_start.ln + 1}`;
+		return result;
 	}
 }
 
 class IllegalCharError extends Error {
-	constructor(details) {
-		super('Illegal Character', details);
+	constructor(pos_start, pos_end, details) {
+		super(pos_start, pos_end, 'Illegal Character', details);
 	}
 }
 

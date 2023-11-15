@@ -1,5 +1,6 @@
 const Tokens_Import = require('../lexer/Tokens_Import.js');
 const Error_Import = require('../lexer/Error.js');
+const Position_Import = require('../lexer/Position.js');
 
 const TT_INT 	  =  'TT_INT';
 const TT_FLOAT  = 'TT_FLOAT';
@@ -15,20 +16,21 @@ const DIGITS_REGEX_DOT = /[0-9.]/;
 const SPACE_TAB_REGEX = /[ \t]/;
 
 class Lexer {
-	constructor(text) {
+	constructor(fn, text) {
 		this.text = text;
-		this.pos = -1;
+		this.fn = fn;
+		this.pos = new Position_Import.Position(-1, 0, -1, fn, text);
 		this.current_character = null;
 
 		this.Advance();
 	}
 
 	Advance() {
-		this.pos++;
+		this.pos.Advance(this.current_character);
 		// console.log(`Pos: ${this.pos}`);
 		// console.log(`Text at pos: ${this.text[this.pos]}`);
-		if(this.pos <= this.text.length) {
-			this.current_character = this.text[this.pos];
+		if(this.pos.idx <= this.text.length) {
+			this.current_character = this.text[this.pos.idx];
 		} else {
 			this.current_character = null;
 		}
@@ -68,8 +70,8 @@ class Lexer {
 				// console.log('RightPara');
 				tokens.push(new Tokens_Import.Token(TT_RPAREN))
 			} else {
-				// console.log('illegal');
-				return {tokens: [], error: new Error_Import.IllegalCharError(`'${this.current_character}'`)};
+				let pos_start = this.pos.Copy();
+				return {tokens: [], error: new Error_Import.IllegalCharError(pos_start, this.pos.idx, `'${this.current_character}'`)};
 			}
 			// // console.log(this.text[this.pos]);
 			if(space_or_other == false){
@@ -111,10 +113,10 @@ class Lexer {
 	}
 }
 
-function Run(command) {
-	const lexer = new Lexer(command);
+function Run(fn, command) {
+	const lexer = new Lexer(fn, command);
 
-	return lexer.Make_Tokens();;
+	return lexer.Make_Tokens();
 }
 
 module.exports = { Run };

@@ -13,7 +13,7 @@ function InputStep() {
 		if(command == 'exit()') {
 			return;
 		} else {
-			let output = LEXER_IMPORT.Run(command);
+			let output = LEXER_IMPORT.Run('<stdin>', command);
 
 			const result = output.tokens;
 			const error = output.error;
