@@ -4,7 +4,7 @@
   "description": "Custom interpretor language",
   "main": "index.js",
   "scripts": {
-    "test": "start"
+    "test": "node index.js"
   },
   "repository": {
     "type": "git",
