@@ -21,7 +21,7 @@ function InputStep() {
 			if(error) {
 				console.log(error.As_String());
 			} else {
-				console.log(result);
+				// console.log(result);
 			}
 
 			InputStep();
