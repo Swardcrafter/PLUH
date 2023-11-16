@@ -1,5 +1,5 @@
 // Imports:
-const LEXER_IMPORT = require('../lexer/Lexer.js');
+const RUN_IMPORT = require('./Run.js');
 
 
 function InputStep() {
@@ -13,9 +13,9 @@ function InputStep() {
 		if(command == 'exit()') {
 			return;
 		} else {
-			let output = LEXER_IMPORT.Run('<stdin>', command);
+			let output = RUN_IMPORT.Run('<stdin>', command);
 
-			const result = output.tokens;
+			const result = output.result;
 			const error = output.error;
 
 			if(error) {

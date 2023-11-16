@@ -113,10 +113,4 @@ class Lexer {
 	}
 }
 
-function Run(fn, command) {
-	const lexer = new Lexer(fn, command);
-
-	return lexer.Make_Tokens();
-}
-
-module.exports = { Run };
+module.exports = { Lexer };
