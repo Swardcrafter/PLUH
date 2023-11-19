@@ -1,5 +1,4 @@
 // deno-lint-ignore-file no-empty-interface
-// https://github.com/tlaceby/guide-to-interpreters-series
 // -----------------------------------------------------------
 // --------------          AST TYPES        ------------------
 // ---     Defines the structure of our languages AST      ---
@@ -10,6 +9,7 @@ export type NodeType =
   | "Program"
   | "VarDeclaration"
   // EXPRESSIONS
+  | "AssignmentExpr"
   | "NumericLiteral"
   | "Identifier"
   | "BinaryExpr";
@@ -39,6 +39,12 @@ export interface VarDeclaration extends Stmt {
 
 /**  Expressions will result in a value at runtime unlike Statements */
 export interface Expr extends Stmt {}
+
+export interface AssignmentExpr extends Expr {
+  kind: "AssignmentExpr";
+  assigne: Expr;
+  value: Expr;
+}
 
 /**
  * A operation with two sides seperated by a operator.
