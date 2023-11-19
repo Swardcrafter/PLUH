@@ -10,6 +10,11 @@ export type NodeType =
   | "VarDeclaration"
   // EXPRESSIONS
   | "AssignmentExpr"
+  | "MemberExpr"
+  | "CallExpr"
+  // Literals
+  | "Property"
+  | "ObjectLiteral"
   | "NumericLiteral"
   | "Identifier"
   | "BinaryExpr";
@@ -58,6 +63,19 @@ export interface BinaryExpr extends Expr {
   operator: string; // needs to be of type BinaryOperator
 }
 
+export interface CallExpr extends Expr {
+  kind: "CallExpr";
+  arguments: Expr[];
+  caller: Expr;
+}
+
+export interface MemberExpr extends Expr {
+  kind: "MemberExpr";
+  object: Expr;
+  property: Expr;
+  computed: boolean;
+}
+
 // LITERAL / PRIMARY EXPRESSION TYPES
 /**
  * Represents a user-defined variable or symbol in source.
@@ -73,4 +91,15 @@ export interface Identifier extends Expr {
 export interface NumericLiteral extends Expr {
   kind: "NumericLiteral";
   value: number;
+}
+
+export interface Property extends Expr {
+  kind: "Property";
+  key: string;
+  value?: Expr;
+}
+
+export interface ObjectLiteral extends Expr {
+  kind: "ObjectLiteral";
+  properties: Property[];
 }
