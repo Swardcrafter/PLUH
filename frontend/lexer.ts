@@ -16,6 +16,7 @@ export enum TokenType {
   BinaryOperator,
   Equals,
   Comma,
+  Dot,
   Colon,
   Semicolon,
   OpenParen,
@@ -110,6 +111,8 @@ export function tokenize(sourceCode: string): Token[] {
       tokens.push(token(src.shift(), TokenType.Colon));
     } else if (src[0] == ",") {
       tokens.push(token(src.shift(), TokenType.Comma));
+    } else if (src[0] == ".") {
+      tokens.push(token(src.shift(), TokenType.Dot));
     } // HANDLE MULTICHARACTER KEYWORDS, TOKENS, IDENTIFIERS ETC...
     else {
       // Handle numeric literals -> Integers

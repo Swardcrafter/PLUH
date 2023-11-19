@@ -65,7 +65,7 @@ export interface BinaryExpr extends Expr {
 
 export interface CallExpr extends Expr {
   kind: "CallExpr";
-  arguments: Expr[];
+  args: Expr[];
   caller: Expr;
 }
 
